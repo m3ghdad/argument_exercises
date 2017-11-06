@@ -28,9 +28,12 @@ Function.prototype.myBindArgs = function (ctx, ...args) {
   };
 };
 
-Function.prototype.myBindArgs2 = function (ctx, arguments) {
-  return(...callArgs) => {
-    return this.apply(ctx, arguments.concat(callArgs));
+Function.prototype.myBindArgs2 = function (ctx) {
+  const fn = this;
+  const bindArgs = Array.from(arguments).slice(1);
+  return function bound() {
+    const callArgs = Array.from(arguments);
+    return fn.apply(ctx, arguments.concat(callArgs));
   };
 };
 
