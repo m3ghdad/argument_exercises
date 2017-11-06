@@ -76,3 +76,27 @@ const notMarkovSays = markov.says.myBindArgs(breakfast);
 notMarkovSays("meow", "me");
 // Breakfast says meow to me!
 // true
+
+
+function curriedSum(numArgs) {
+  let numbers = [];
+  function _curriedSum(number) {
+    numbers.push(number);
+    if (numbers.length === numArgs) {
+      //sums numbers in the array and return the result
+      total = 0;
+
+      for (let i = 0; i < numbers.length; i++) {
+      total +=  numbers[i]
+      }
+      return total;
+    }
+    else {
+      return _curriedSum;
+    }
+  }
+  return _curriedSum;
+}
+
+const sumCurried = curriedSum(4);
+console.log(sumCurried(5)(30)(20)(1));// => 56
