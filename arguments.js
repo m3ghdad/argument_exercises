@@ -100,3 +100,38 @@ function curriedSum(numArgs) {
 
 const sumCurried = curriedSum(4);
 console.log(sumCurried(5)(30)(20)(1));// => 56
+
+
+Function.prototype.curry = function(numArgs) {
+  //returns a function that collect up arguments until there are numArgs of them
+  //if there are too few arguments still, it should return itself
+  //when there are numArgs arguments, it should call the original function
+  const collection = [];
+  const fn = this;
+
+  function _curried(collected) {
+    collection.push(collected);
+    if (collection.length == numArgs) {
+      return fn(...collection)
+    }
+    else {
+      return _curried;
+    }
+  }
+  return _curried;
+}
+
+Function.prototype.curry2 = function(numArgs) {
+  const collection = [];
+  const fn = this;
+
+  function _curried(collected) {
+    collection.push(collected);
+    if (collection.length === numArgs) {
+      return fn.apply(null, collection);
+    } else {
+      return _curried;
+    }
+  }
+  return _curried;
+};
